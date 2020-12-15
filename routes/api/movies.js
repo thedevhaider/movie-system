@@ -18,7 +18,7 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // Validate Register Inputs
+    // Validate Movie Inputs
     const { errors, isValid } = validateMovieInput(req.body);
 
     if (!isValid) {
@@ -46,8 +46,14 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Movie.find()
-      .sort({ createdAt: -1 })
+    // Offsets for Pagination
+    const skip = req.query.skip ? Number(req.query.skip) : 0;
+    const limit = req.query.limit ? Number(req.query.limit) : 10;
+
+    // List Movies and Paginate the result
+    Movie.find({}, {}, { skip: skip, limit: limit })
+      .populate("user", { password: 0 })
+      .sort({ average_rating: -1 })
       .then((movies) => res.json(movies))
       .catch((err) => {
         console.log(err);

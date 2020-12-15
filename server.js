@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const movies = require("./routes/api/movies");
+const reviews = require("./routes/api/reviews");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 
@@ -38,6 +39,7 @@ require("./config/passport")(passport);
 // Routes APIs
 app.use("/api/users", users);
 app.use("/api/movies", movies);
+app.use("/api/reviews", reviews);
 
 const PORT = process.env.PORT || 3000;
 
