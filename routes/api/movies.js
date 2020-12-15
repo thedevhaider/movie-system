@@ -47,7 +47,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movie.find()
-      .sort({ date: -1 })
+      .sort({ createdAt: -1 })
       .then((movies) => res.json(movies))
       .catch((err) => {
         console.log(err);
