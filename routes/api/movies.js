@@ -49,9 +49,10 @@ router.get(
     Movie.find()
       .sort({ date: -1 })
       .then((movies) => res.json(movies))
-      .catch((err) =>
-        res.status(404).json({ nomoviefound: "No movies found" })
-      );
+      .catch((err) => {
+        console.log(err);
+        res.status(404).json({ nomoviefound: "No movies found" });
+      });
   }
 );
 
